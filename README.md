@@ -7,23 +7,23 @@ React don't preload all the code of application. At first, the id="root" is load
 
 ## Server Side Rendering
 
--preloading
--hydratation
--production mode (build)
+- preloading
+- hydratation
+- production mode (build)
 
 ## Control flow in SSR
 
--pages
--getStaticProps
--data
--fetch
--props
+- pages
+- getStaticProps
+- data
+- fetch
+- props
 
 
 ## Static
 
--GetStaticProps
--GetStaticPaths
--GetServerSideProps
+- GetStaticProps
+- GetStaticPaths
+- GetServerSideProps
 
 
