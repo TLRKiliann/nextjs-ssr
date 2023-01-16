@@ -14,7 +14,6 @@ function Home() {
         Return NextJS pre-rendering
       </h1>
       <label>Go to users</label>
-      <br />
       <button onClick={handleUsers}>
         Enter
       </button>

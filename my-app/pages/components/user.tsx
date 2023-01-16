@@ -1,5 +1,10 @@
+type nextProps = {
+    name: string
+    email: string
+}
+
 type UserProps = {
-    user: any
+    user: nextProps
 }
 
 function User ({ user }: UserProps) {

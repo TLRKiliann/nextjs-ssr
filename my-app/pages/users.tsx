@@ -4,6 +4,7 @@ type UsersProps = {
     users: any
 }
 
+//Call component <User /> from components folder
 function UserList({ users }: UsersProps) {
     return (
         <>
@@ -18,7 +19,6 @@ function UserList({ users }: UsersProps) {
         </>
     )
 }
-
 export default UserList
 
 export async function getStaticProps() {

@@ -1,5 +1,12 @@
+type SubProps = {
+    id: number
+    title: string
+    posts: any
+}
+
 type PostProps = {
-    post: any
+    post: SubProps
+    id: number
 }
 
 function Post({ post }: PostProps) {
@@ -16,7 +23,7 @@ export async function getStaticPaths() {
     const response = await fetch("https://jsonplaceholder.typicode.com/posts")
     const data = await response.json()
 
-    const paths = data.map((post: any) => {
+    const paths = data.map((post: PostProps) => {
         return {
             params: {
                 postId: `${post.id}`,
@@ -39,7 +46,16 @@ export async function getStaticPaths() {
     }
 }
 
-export async function getStaticProps(context: any) {
+type ParamsProps = {
+    postId: number
+}
+
+type ContextProps = {
+    context: object
+    params: ParamsProps
+}
+
+export async function getStaticProps(context: ContextProps) {
     const { params } = context
     const response = await fetch(`https://jsonplaceholder.typicode.com/posts/${params.postId}`)
     const data = await response.json()

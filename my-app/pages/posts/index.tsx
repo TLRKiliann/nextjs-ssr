@@ -1,13 +1,15 @@
 import Link from "next/link"
 
 type PostListProps = {
+    id: number
+    title: string
     posts: any
 }
 
 function PostList({ posts }: PostListProps) {
     return (
         <div>
-        {posts.map((post: any) => (
+        {posts.map((post: PostListProps) => (
             <div key={post.id}>
                 <Link href={`/posts/${post.id}`} passHref>
                     <p>{post.id} {post.title}</p>
