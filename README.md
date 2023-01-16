@@ -2,6 +2,9 @@
 
 Crash course about SSR of NextJS.
 
+I voluntarily didn't use the anonymous arrow functions that can cause the fast refresh to not preserve the state 
+of local components.
+
 ## Server Side Rendering
 
 The power of NextJS is SSR (Server Side Rendering).
@@ -118,6 +121,9 @@ console.log("generate / re-generate")
 
 ## fallback
 
+- false
+- true
+- 'blocking'
 
 ## SSR - CSR :
 
