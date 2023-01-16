@@ -119,11 +119,54 @@ getStaticProps() et un
 console.log("generate / re-generate")
 
 
-## fallback
+## fallback with static paths
 
 - false
+
+The paths returned from getStaticPaths will be rendered to HTML at built time by getStaticProps.
+We can verify that in .next/server/pages/post/(num) (here we can see all the paths)
+
+Any Paths not returned by getStaticProps will result in a 404 page.
+http://localhost:3000/post/4 that not beeing created display 404 page.
+
+We should use false:
+
+- for a blog site with a few articles.
+- when new page are not added often.
+- application with a small number of paths to pre-render.
+
+---
+
 - true
+
+The paths returned from getStaticPaths will be rendered to HTML at built time by getStaticProps.
+
+The paths that have not been generated at build time will not result in a 404 page. Instead,
+NextJS will serve a "fallback" version of the page on the first request to such a path.
+
+In the background, NextJS will statically generate the requested path HTML and JSON. This includes running getStaticProps.
+
+When that done the browser receives the JSON for the generated path. This will be used to automatically render the page with the required props. From the user's perspective, the page will be swapped from the fallback page to the full page.
+
+At the same time, NextJS keeps track of the new list of pre-rendered pages.Subsequent requests to the same path will serve the generated page, just like other pages pre-rendered at build time.
+
+We should use false:
+
+- Large e-commerce site.
+- If you get a few thousand product, build can take a really long time (1s per page).
+
+---
+
 - 'blocking'
+
+The paths returned from getStaticPaths will be rendered to HTML at built time by getStaticProps.
+
+The paths that have not been generated at build time will not result in a 404 page. Instead,
+on the first request, NextJS will render the page on the server and return the generated HTML.
+
+When that done the browser receives the HTML for the generated path. There is no flash of loading/fallback state.
+
+At the same time, NextJS keeps track of the new list of pre-rendered pages. Subsequent requests to the same path will serve the generated page, just like other pages pre-rendered at build time.
 
 ## SSR - CSR :
 
