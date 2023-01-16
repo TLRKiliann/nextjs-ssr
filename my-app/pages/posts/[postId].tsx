@@ -16,7 +16,6 @@ function Post({ post }: PostProps) {
         </div>
     )
 }
-
 export default Post
 
 export async function getStaticPaths() {
