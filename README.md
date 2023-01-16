@@ -121,7 +121,7 @@ console.log("generate / re-generate")
 
 ## fallback with static paths
 
-- false
+- fallback false
 
 The paths returned from getStaticPaths will be rendered to HTML at built time by getStaticProps.
 We can verify that in .next/server/pages/post/(num) (here we can see all the paths)
@@ -137,7 +137,7 @@ We should use false:
 
 ---
 
-- true
+- fallback true
 
 The paths returned from getStaticPaths will be rendered to HTML at built time by getStaticProps.
 
@@ -150,14 +150,14 @@ When that done the browser receives the JSON for the generated path. This will b
 
 At the same time, NextJS keeps track of the new list of pre-rendered pages.Subsequent requests to the same path will serve the generated page, just like other pages pre-rendered at build time.
 
-We should use false:
+We should use true:
 
 - Large e-commerce site.
 - If you get a few thousand product, build can take a really long time (1s per page).
 
 ---
 
-- 'blocking'
+- fallback 'blocking'
 
 The paths returned from getStaticPaths will be rendered to HTML at built time by getStaticProps.
 
@@ -168,6 +168,11 @@ When that done the browser receives the HTML for the generated path. There is no
 
 At the same time, NextJS keeps track of the new list of pre-rendered pages. Subsequent requests to the same path will serve the generated page, just like other pages pre-rendered at build time.
 
+We should use 'blocking':
+
+- Dev prefer the page to be load without a loading indicator. This helps avoid the layout shift.
+- Some crawlers did not support JavaScript. The loading page would be rendered and then the full page would be loaded which was causing a problem.
+
 ## SSR - CSR :
 
 As getStaticProps runs only on the server-side, it will never run on the client-side. It won’t even be included in the JS bundle for the browser, so you can write direct database queries without them being sent to browsers.
@@ -175,8 +180,6 @@ As getStaticProps runs only on the server-side, it will never run on the client-
 This means that instead of fetching an API route from getStaticProps (that itself fetches data from an external source), you can write the server-side code directly in getStaticProps.
 
 ## GetServerSideProps
-
-
 
 ## ISR - Incremental Static Rendering
 
