@@ -1,4 +1,5 @@
 import Link from "next/link"
+import { isPropertySignature } from "typescript"
 
 type PostListProps = {
     id: number
@@ -9,7 +10,7 @@ type PostListProps = {
 function PostList({ posts }: PostListProps) {
     return (
         <div>
-        {posts.map((post: PostListProps) => (
+        {posts.map((post: any) => (
             <div key={post.id}>
                 <Link href={`/posts/${post.id}`} passHref>
                     <p>{post.id} {post.title}</p>
@@ -19,7 +20,6 @@ function PostList({ posts }: PostListProps) {
         </div>
     )
 }
-
 export default PostList
 
 export async function getStaticProps() {
