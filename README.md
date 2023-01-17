@@ -185,7 +185,7 @@ export async function getStaticPaths() {
     const response = await fetch("https://jsonplaceholder.typicode.com/posts")
     const data = await response.json()
 
-    const paths = data.map((post: PostProps) => {
+    const paths = data.map((post: any) => {
         return {
             params: {
                 postId: `${post.id}`,
@@ -215,6 +215,8 @@ If we use `http://localhost:3000/posts/4` with the browser, a 404 page will be g
 
 **fallback true**
 
+(In present application fallback is setting on true, so you can test it ! Enter new id over 3 in the address bar of you browser (ex: http://localhost:3000/posts/4))
+
 The paths returned from getStaticPaths will be rendered to HTML at built time by getStaticProps.
 
 The paths that have not been generated at build time will not result in a 404 page. Instead,
@@ -238,18 +240,7 @@ Example with getStaticPaths() :
 
 import { useRouter } from 'next/router'
 
-type SubProps = {
-    id: number
-    title: string
-    posts: any
-}
-
-type PostProps = {
-    post: SubProps
-    id: number
-}
-
-function Post({ post }: PostProps) {
+function Post({ post }: any) {
 
 	const router = useRouter()
 
@@ -270,7 +261,7 @@ export async function getStaticPaths() {
     const response = await fetch("https://jsonplaceholder.typicode.com/posts")
     const data = await response.json()
 
-    const paths = data.map((post: PostProps) => {
+    const paths = data.map((post: any) => {
         return {
             params: {
                 postId: `${post.id}`,
