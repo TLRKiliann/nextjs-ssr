@@ -1,22 +1,16 @@
 import Link from "next/link"
 import { isPropertySignature } from "typescript"
 
-type PostListProps = {
-    id: number
-    title: string
-    posts: any
-}
-
-function PostList({ posts }: PostListProps) {
+function PostList({ posts }: any) {
     return (
         <div>
-        {posts.map((post: any) => (
-            <div key={post.id}>
-                <Link href={`/posts/${post.id}`} passHref>
-                    <p>{post.id} {post.title}</p>
-                </Link>
-            </div>
-        ))}
+            {posts.map((post: any) => (
+                <div key={post.id}>
+                    <Link href={`/posts/${post.id}`} passHref>
+                        <p>{post.id} {post.title}</p>
+                    </Link>
+                </div>
+            ))}
         </div>
     )
 }

@@ -1,5 +1,8 @@
 # nextjs-ssr
 
+Version:
+└─ $ ▶ npx nuxi info
+
 Crash course about NextJS.
 
 I voluntarily didn't use the anonymous arrow functions that can cause the fast refresh to not preserve the state of local components.
@@ -47,7 +50,29 @@ You have to do that in static generation case, not in ISR (see below).
 
 When the application is built, we can read into the console `page | size | first load js`. It means that the routes have been built by generating static files into `.next/server/pages/index.html`
 
-page | size | first load js
+```
+(console rendered with fallback set to false => see below => fallback with static paths (getStaticPaths))
+
+Route (pages)                              Size     First Load JS
+┌ ○ /                                      413 B            76 kB
+├   /_app                                  0 B            73.5 kB
+├ ○ /404                                   181 B          73.7 kB
+├ ● /posts                                 356 B          75.9 kB
+├ ● /posts/[postId]                        367 B          73.9 kB
+├   ├ /posts/1
+├   ├ /posts/2
+├   └ /posts/3
+└ ● /users                                 338 B          73.9 kB
++ First Load JS shared by all              74.2 kB
+  ├ chunks/framework-114634acb84f8baa.js   45.4 kB
+  ├ chunks/main-1227de1dc46e1332.js        27.1 kB
+  ├ chunks/pages/_app-135ed2d9870018fa.js  296 B
+  ├ chunks/webpack-8fa1640cc84ba8fe.js     750 B
+  └ css/3e4729faa83087a0.css               706 B
+
+○  (Static)  automatically rendered as static HTML (uses no initial props)
+●  (SSG)     automatically generated as static HTML + JSON (uses getStaticProps)
+```
 
 At first load, JS shares all the routes and heading into the browser client.
 
@@ -63,11 +88,13 @@ the `/` => corresponds to the index.tsx which is generated in `.next/server/page
 
 - Static Side Generation (SSG) + automatically genereted as static HTML + JSON
 
-Example: users.tsx => .next/server/pages/users.html
+Example for users.tsx => .next/server/pages/users.html
 
+```
 chunks are downloaded when we use `/users`.
-.next/server/static/chunks/pages
+.next/server/static/chunks/pages/...
 Files JS or TSX are sended to the browser.
+```
 
 Links are pre-fetched by default for pages using static generation (SSG).
 

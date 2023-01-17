@@ -1,18 +1,12 @@
-import User from './components/user'
-
-type UsersProps = {
-    users: any
-}
-
-//Call component <User /> from components folder
-function UserList({ users }: UsersProps) {
+function UserList({ users }: any) {
     return (
         <>
             <h1>List of users</h1>
             {users.map((user: any) => {
                 return (
                     <div key={user.id}>
-                        <User user={user} />
+                        <p>{user.name}</p>
+                        <p>{user.email}</p>
                     </div>
                 )
             })}

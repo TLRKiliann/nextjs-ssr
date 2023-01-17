@@ -1,15 +1,14 @@
-type SubProps = {
-    id: number
-    title: string
-    posts: any
-}
+import { useRouter } from 'next/router'
 
-type PostProps = {
-    post: SubProps
-    id: number
-}
+function Post({ post }: any) {
+    
+    const router = useRouter()
+    
+    if (router.isFallback) {
+        console.log("loading complete !")
+        return <h1>Loading...</h1>
+    }
 
-function Post({ post }: PostProps) {
     return (
         <div key={post.id}>
             <p>{post.id} {post.title}</p>
@@ -19,10 +18,11 @@ function Post({ post }: PostProps) {
 export default Post
 
 export async function getStaticPaths() {
+
     const response = await fetch("https://jsonplaceholder.typicode.com/posts")
     const data = await response.json()
 
-    const paths = data.map((post: PostProps) => {
+    const paths = data.map((post: any) => {
         return {
             params: {
                 postId: `${post.id}`,
@@ -31,7 +31,7 @@ export async function getStaticPaths() {
     })
 
     return {
-        paths/*: [
+        paths: [
             {
                 params: {postId: "1"},
             },
@@ -41,20 +41,11 @@ export async function getStaticPaths() {
             {
                 params: {postId: "3"},
             },
-    ]*/, fallback: false,
+    ], fallback: true,
     }
 }
 
-type ParamsProps = {
-    postId: number
-}
-
-type ContextProps = {
-    context: object
-    params: ParamsProps
-}
-
-export async function getStaticProps(context: ContextProps) {
+export async function getStaticProps(context: any) {
     const { params } = context
     const response = await fetch(`https://jsonplaceholder.typicode.com/posts/${params.postId}`)
     const data = await response.json()
