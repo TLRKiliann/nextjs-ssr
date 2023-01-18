@@ -17,12 +17,14 @@ function PostList({ posts }: any) {
 export default PostList
 
 export async function getStaticProps() {
+    console.log("generate or re-generate")
     const response = await fetch("https://jsonplaceholder.typicode.com/posts")
     const data = await response.json()
 
     return {
         props: {
-            posts: data
-        }
+            posts: data,
+        },
+        revalidate: 10,
     }
 }
