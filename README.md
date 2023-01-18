@@ -1,8 +1,5 @@
 # nextjs-ssr
 
-Version:
-└─ $ ▶ npx nuxi info
-
 Crash course about NextJS.
 
 I voluntarily didn't use the anonymous arrow functions that can cause the fast refresh to not preserve the state of local components.
@@ -33,19 +30,19 @@ All the HTML content is generated in advance when we build application.
 
 At first, delete the folder .next (generated with yarn) or nodes_modules (generated with npm or pnpm)
 
-`yarn build`
+└─ $ ▶ `yarn build`
 
 or
 
-`npm run build`
+└─ $ ▶ `npm run build`
 
 or
 
-`pnpm run build`
+└─ $ ▶ `pnpm run build`
 
-New `.next` or `node_modules` is generated into your app.
+New `.next` or is generated into your app.
 
-For every change, you need to delete `.next` or `node_modules` and re-run the cmd diplayed above to build again your application.
+For every change, you need to delete `.next` or and re-run the cmd diplayed above to build again your application.
 You have to do that in static generation case, not in ISR (see below).
 
 When the application is built, we can read into the console `page | size | first load js`. It means that the routes have been built by generating static files into `.next/server/pages/index.html`
@@ -308,7 +305,7 @@ We should use 'blocking':
 - Some crawlers did not support JavaScript. The loading page would be rendered and then the full page would be loaded which was causing a problem.
 
 
-## Incremental Static Regeneration (ISR)
+## Incremental Static Regeneration (ISR) with json-server
 
 There was need to update only those pages which needed a change without having
 to rebuild entire app.
@@ -343,6 +340,39 @@ export async function getStaticProps() {
 ```
 
 Reload the page after 10s & you will see message of console.log() in the terminal.
+
+To change data install json-server.
+
+└─ $ ▶ pnpm install json-server --save-dev
+
+```
+{
+  // ... 
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "server": "json-server -p4000 --watch db.json"
+  },
+}
+```
+
+└─ $ ▶ pnpm run server
+
+The cmd above generate a `db.json`. You can write whatever you want inside this file.
+
+use this address into th fetch function of your app:
+
+http://localhost:4000/users (of cours, users have to be in db.json) or anything what you want.
+
+After that, launch server & delete `.next` folder of your app. In another terminal, enter:
+
+└─ $ ▶ pnpm run build
+
+You can observe the get requests into the terminal with which one you started server.
+
+You can change value into db.json to appreciate the changes.
 
 ## re-generation
 
