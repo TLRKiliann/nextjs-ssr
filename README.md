@@ -280,7 +280,7 @@ export async function getStaticPaths() {
             {
                 params: {postId: "3"},
             },
-    ], fallback: true,
+    ], fallback: true,                  //page could be reachable without page 404
     }
 }
 ```
@@ -323,13 +323,26 @@ In getStaticProps function, apart from the props key, we can specify a `revalida
 
 The value for revalidate is the number of seconds after which a page re-generation can occur.
 
+**Solution**
 
-Solution
+```
+(index.tsx)
 
-revalidate: 10
+export async function getStaticProps() {
+    console.log("generating or re-generating")
+    const response = await fetch("...")
+    const data = await response.json()
 
-getStaticProps() et un console.log("generate / re-generate")
+    return {
+        props: {
+            posts: data,
+        },
+        revalidate: 10,
+    }
+}
+```
 
+Reload the page after 10s & you will see message of console.log() in the terminal.
 
 ## re-generation
 
@@ -340,7 +353,3 @@ getStaticProps() et un console.log("generate / re-generate")
 As getStaticProps runs only on the server-side, it will never run on the client-side. It won’t even be included in the JS bundle for the browser, so you can write direct database queries without them being sent to browsers.
 
 This means that instead of fetching an API route from getStaticProps (that itself fetches data from an external source), you can write the server-side code directly in getStaticProps.
-
-## getServerSideProps
-
-## getClientSideProps
