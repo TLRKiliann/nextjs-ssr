@@ -1,7 +1,15 @@
 import Link from "next/link"
-import { isPropertySignature } from "typescript"
+import { GetStaticProps } from "next"
 
-function PostList({ posts }: any) {
+type PostListProps = {
+    posts: {
+        map(arg0: (post: any) => JSX.Element): import("react").ReactNode
+        id: number
+        title: string
+    }
+}
+
+const PostList = ({ posts }: PostListProps) => {
     return (
         <div>
             {posts.map((post: any) => (
@@ -16,7 +24,7 @@ function PostList({ posts }: any) {
 }
 export default PostList
 
-export async function getStaticProps() {
+export const getStaticProps: GetStaticProps = async () => {
     console.log("generate or re-generate")
     const response = await fetch("https://jsonplaceholder.typicode.com/posts")
     const data = await response.json()

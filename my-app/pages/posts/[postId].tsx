@@ -1,6 +1,14 @@
+import { GetStaticProps, GetStaticPaths } from 'next'
 import { useRouter } from 'next/router'
 
-function Post({ post }: any) {
+type PostProps = {
+    post: {
+        id: number
+        title: string
+    }
+}
+
+const Post = ({ post }: PostProps) => {
     
     const router = useRouter()
     
@@ -17,7 +25,7 @@ function Post({ post }: any) {
 }
 export default Post
 
-export async function getStaticPaths() {
+export const getStaticPaths: GetStaticPaths = async () => {
 
     const response = await fetch("https://jsonplaceholder.typicode.com/posts")
     const data = await response.json()
@@ -45,7 +53,7 @@ export async function getStaticPaths() {
     }
 }
 
-export async function getStaticProps(context: any) {
+export const getStaticProps: GetStaticProps = async (context: any) => {
     const { params } = context
     const response = await fetch(`https://jsonplaceholder.typicode.com/posts/${params.postId}`)
     const data = await response.json()
