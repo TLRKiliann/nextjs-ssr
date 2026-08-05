@@ -23,6 +23,6 @@
     "typescript": "4.9.4"
   },
   "devDependencies": {
-    "sass": "^1.57.1"
+    "sass": "^1.102.0"
   }
 }
